@@ -16,18 +16,18 @@ namespace DatingApp.API.Controllers
     //controller => have views , controllerBase => without views suitable for api
     public class ValuesController : ControllerBase
     {
-        private readonly DataContext context;
+        private readonly DataContext _context;
         public ValuesController(DataContext context)
         {
-            this.context = context;
+            _context = context;
 
         }
         // GET api/values
-        [Authorize]
+        [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult> GetValues()
         {
-            var values = await context.Values.ToListAsync();
+            var values = await _context.Values.ToListAsync();
             return Ok(values);
         }
 
@@ -36,7 +36,7 @@ namespace DatingApp.API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult> GetValues(int id)
         {
-            var value = await context.Values.FirstOrDefaultAsync(x => x.Id == id);
+            var value = await _context.Values.FirstOrDefaultAsync(x => x.Id == id);
             return Ok(value);
         }
 
